@@ -1,78 +1,8 @@
-# Praktikum 8: PHP dan Database MySQL
-
-**Mata Kuliah** : Pemrograman Web OBE
+<img width="1920" height="1200" alt="Screenshot 2026-11-19 225855" src="https://github.com/user-attachments/assets/0750301e-a0b8-401d-9af6-5246f54d2e52" />**Mata Kuliah** : Pemrograman Web 
 **Program Studi** : Teknik Informatika
-**Nama** : Bagas
-**NIM** : _(isi NIM)_
-**Kelas** : _(isi kelas)_
-
----
-
-## Daftar Isi
-
-1. [Tujuan](#tujuan)
-2. [Persiapan](#persiapan)
-3. [Membuat Database](#membuat-database-studi-kasus-data-barang)
-4. [Membuat Program CRUD](#membuat-program-crud)
-   - [koneksi.php](#1-file-koneksi-database-koneksiphp)
-   - [index.php (Read)](#2-menampilkan-data-read--indexphp)
-   - [tambah.php (Create)](#3-menambah-data-create--tambahphp)
-   - [ubah.php (Update)](#4-mengubah-data-update--ubahphp)
-   - [hapus.php (Delete)](#5-menghapus-data-delete--hapusphp)
-5. [Struktur Folder](#struktur-folder)
-6. [Alur Kerja Aplikasi](#alur-kerja-aplikasi)
-7. [Kesimpulan](#kesimpulan)
-
----
-
-## Tujuan
-
-1. Mahasiswa mampu memahami konsep dasar Database.
-2. Mahasiswa mampu memahami konsep dasar CRUD menggunakan PHP.
-3. Mahasiswa mampu membuat program CRUD sederhana menggunakan PHP.
-
-**CRUD** adalah singkatan dari empat operasi dasar pada data:
-
-| Operasi | Arti | Perintah SQL | File pada praktikum |
-|---------|------|--------------|---------------------|
-| **C**reate | Menambah data | `INSERT` | `tambah.php` |
-| **R**ead | Menampilkan data | `SELECT` | `index.php` |
-| **U**pdate | Mengubah data | `UPDATE` | `ubah.php` |
-| **D**elete | Menghapus data | `DELETE` | `hapus.php` |
-
----
-
-## Persiapan
-
-Alat yang dibutuhkan:
-
-- Text editor (VSCode)
-- XAMPP (Apache, MySQL/MariaDB, PHP)
-- Browser
-
-Langkah persiapan:
-
-1. Buat folder baru bernama **`lab8_php_database`** pada docroot web server, yaitu `htdocs` (contoh: `d:\xampp\htdocs\lab8_php_database`).
-2. Folder tersebut dapat diakses melalui browser di `http://localhost/lab8_php_database/`. Selama belum ada file di dalamnya, browser hanya menampilkan **Index of /lab8_php_database** (halaman daftar direktori Apache).
-
-> 📸 **Screenshot:** Direktori `lab8_php_database` di dalam `htdocs`
-> `![Direktori Lab8](screenshots/01-direktori-lab8.png)`
-
-> 📸 **Screenshot:** Tampilan `http://localhost/lab8_php_database/` (Index of)
-> `![Tampilan Web](screenshots/02-index-of.png)`
-
-### Menjalankan MySQL Server
-
-1. Buka **XAMPP Control Panel**.
-2. Klik **Start** pada modul **Apache** dan **MySQL**.
-3. Pastikan kedua modul berstatus hijau (running). Apache berjalan pada port 80/443 dan MySQL pada port 3306.
-
-> 📸 **Screenshot:** XAMPP Control Panel dengan Apache dan MySQL berjalan
-> `![XAMPP Control](screenshots/03-xampp-control.png)`
-
-### Mengakses MySQL Client menggunakan phpMyAdmin
-
-Setelah Apache dan MySQL berjalan, buka `http://localhost/phpmyadmin/` melalui browser. phpMyAdmin dipakai untuk membuat database, membuat tabel, dan menjalankan perintah SQL.
+**Nama** : Bagas Arya Ramadhan
+**NIM** : _(312510328)_
+**Kelas** : _(i251d)_
 
 ---
 
@@ -126,8 +56,8 @@ Penjelasan tiap kolom:
 | `harga_jual` | `decimal(10,0)` | Harga jual, angka sampai 10 digit tanpa desimal. |
 | `stok` | `int(4)` | Jumlah stok barang. |
 
-> 📸 **Screenshot:** Tampilan phpMyAdmin setelah tabel `data_barang` dibuat pada database `latihan1`
-> `![phpMyAdmin](screenshots/04-phpmyadmin.png)`
+![image alt](https://github.com/Bagas240/lab8_php_database/blob/main/image/Screenshot%202026-11-19%20225956.png?raw=true)
+
 
 ### Menambahkan Data
 
@@ -148,8 +78,7 @@ select * from data_barang;
 
 Hasil: 3 baris data dengan `id_barang` 1, 2, dan 3.
 
-> 📸 **Screenshot:** Tampilan data barang hasil `select * from data_barang;`
-> `![Data Barang](screenshots/05-data-barang.png)`
+![image alt](https://github.com/Bagas240/lab8_php_database/blob/main/image/Screenshot%202026-11-19%20225855.png?raw=true)
 
 ---
 
@@ -191,9 +120,6 @@ if ($conn == false)
 | `#else echo "Koneksi berhasil";` | Bagian ini di-*comment*. Hapus tanda `#` (uncomment) untuk menampilkan pesan "Koneksi berhasil" saat menguji koneksi. |
 
 **Cara menguji:** buka `http://localhost/lab8_php_database/koneksi.php`. Agar pesan sukses tampil, uncomment bagian `echo "Koneksi berhasil";`.
-
-> 📸 **Screenshot:** Tampilan tes koneksi ("Koneksi berhasil")
-> `![Tes Koneksi](screenshots/06-tes-koneksi.png)`
 
 ---
 
@@ -270,9 +196,7 @@ $result = mysqli_query($conn, $sql);
 | `else: ... Belum ada data` | Jika query gagal, ditampilkan baris "Belum ada data" yang menggabungkan 7 kolom (`colspan="7"`). |
 | `endwhile; endif;` | Penutup struktur kontrol dengan sintaks alternatif (cocok dicampur dengan HTML). |
 
-> 📸 **Screenshot:** Tampilan halaman `index.php` (Data Barang)
-> `![Tampilan index](screenshots/07-index.png)`
-
+![image alt](https://github.com/Bagas240/lab8_php_database/blob/main/image/Screenshot%202026-11-19%20113453.png?raw=true)
 ---
 
 ### 3. Menambah Data (Create) – `tambah.php`
@@ -389,9 +313,7 @@ if (isset($_POST['submit']))
 | `<input type="file" name="file_gambar">` | Tombol pilih file gambar (dibaca lewat `$_FILES`). |
 | `<input type="submit" name="submit" value="Simpan">` | Tombol kirim form. |
 
-> 📸 **Screenshot:** Tampilan form Tambah Barang
-> `![Tambah Barang](screenshots/08-tambah-barang.png)`
-
+![image alt](https://github.com/Bagas240/lab8_php_database/blob/main/image/Screenshot%202026-11-19%20113444.png?raw=true)
 ---
 
 ### 4. Mengubah Data (Update) – `ubah.php`
@@ -506,8 +428,7 @@ function is_select($var, $val) {
 
 Proses upload gambar (`$_FILES`, `str_replace`, `move_uploaded_file`) sama seperti pada `tambah.php`.
 
-> 📸 **Screenshot:** Tampilan form Ubah Barang
-> `![Ubah Barang](screenshots/09-ubah-barang.png)`
+![image alt](https://github.com/Bagas240/lab8_php_database/blob/main/image/Screenshot%202026-11-19%20113620.png?raw=true)
 
 ---
 
@@ -535,6 +456,7 @@ header('location: index.php');
 
 ---
 
+
 ## Struktur Folder
 
 ```
@@ -549,42 +471,4 @@ htdocs/
     └── style.css        (tampilan halaman)
 ```
 
-Catatan: `index.php`, `tambah.php`, dan `ubah.php` memanggil `style.css`, dan gambar barang dibaca/diunggah ke folder `gambar/`, sehingga keduanya perlu tersedia di folder aplikasi.
-
----
-
-## Alur Kerja Aplikasi
-
-```
-                  ┌──────────────┐
-                  │  index.php   │  ← SELECT (Read)
-                  │ daftar barang│
-                  └──────┬───────┘
-        ┌────────────────┼────────────────┐
-        ▼                ▼                ▼
- ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
- │ tambah.php  │  │  ubah.php   │  │  hapus.php  │
- │ INSERT      │  │  UPDATE     │  │  DELETE     │
- └──────┬──────┘  └──────┬──────┘  └──────┬──────┘
-        └────────────────┴────────────────┘
-                         ▼
-              header('location: index.php')
-```
-
-Semua file memakai `koneksi.php` untuk terhubung ke database `latihan1`. Setelah proses tambah, ubah, atau hapus selesai, pengguna selalu diarahkan kembali ke `index.php`.
-
----
-
-## Kesimpulan
-
-Pada Praktikum 8 ini telah dipelajari:
-
-1. Cara menjalankan MySQL Server melalui XAMPP dan mengakses phpMyAdmin.
-2. Cara membuat database `latihan1`, tabel `data_barang`, dan mengisi data dengan perintah SQL `INSERT`.
-3. Cara menghubungkan PHP ke MySQL menggunakan `mysqli_connect()` pada file `koneksi.php`.
-4. Implementasi empat operasi CRUD:
-   - **Read** dengan `SELECT` dan `mysqli_fetch_array()` pada `index.php`.
-   - **Create** dengan `INSERT` dan upload gambar pada `tambah.php`.
-   - **Update** dengan `UPDATE` dan pengisian form otomatis pada `ubah.php`.
-   - **Delete** dengan `DELETE` pada `hapus.php`.
-5. Cara mengirim data antar halaman memakai `$_GET` (id pada URL) dan `$_POST` (isi form), serta `$_FILES` untuk file unggahan.
+]
