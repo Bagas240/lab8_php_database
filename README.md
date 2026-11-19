@@ -1,4 +1,4 @@
-<img width="1920" height="1200" alt="Screenshot 2026-11-19 225855" src="https://github.com/user-attachments/assets/0750301e-a0b8-401d-9af6-5246f54d2e52" />**Mata Kuliah** : Pemrograman Web 
+**Mata Kuliah** : Pemrograman Web 
 **Program Studi** : Teknik Informatika
 **Nama** : Bagas Arya Ramadhan
 **NIM** : _(312510328)_
