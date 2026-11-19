@@ -4,42 +4,55 @@ include_once 'koneksi.php';
 
 if (isset($_POST['submit']))
 {
-    $id = $_POST['id'];
-    $nama = $_POST['nama'];
-    $kategori = $_POST['kategori'];
-    $harga_jual = $_POST['harga_jual'];
-    $harga_beli = $_POST['harga_beli'];
-    $stok = $_POST['stok'];
-    $file_gambar = $_FILES['file_gambar'];
+    $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+    $nama = trim($_POST['nama'] ?? '');
+    $kategori = $_POST['kategori'] ?? '';
+    $harga_jual = $_POST['harga_jual'] ?? '';
+    $harga_beli = $_POST['harga_beli'] ?? '';
+    $stok = $_POST['stok'] ?? '';
+    $file_gambar = $_FILES['file_gambar'] ?? null;
     $gambar = null;
     
-    if ($file_gambar['error'] == 0)
+    if ($file_gambar && ($file_gambar['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK)
     {
         $filename = str_replace(' ', '_', $file_gambar['name']);
         $destination = dirname(__FILE__) . '/gambar/' . $filename;
         if (move_uploaded_file($file_gambar['tmp_name'], $destination))
         {
-            $gambar = 'gambar/' . $filename;;
+            $gambar = 'gambar/' . $filename;
         }
     }
 
-    $sql = 'UPDATE data_barang SET ';
-    $sql .= "nama = '{$nama}', kategori = '{$kategori}', ";
-    $sql .= "harga_jual = '{$harga_jual}', harga_beli = '{$harga_beli}',
-stok = '{$stok}' ";
-    if (!empty($gambar))
-        $sql .= ", gambar = '{$gambar}' ";
-    $sql .= "WHERE id_barang = '{$id}'";
-    $result = mysqli_query($conn, $sql);
+    if ($gambar) {
+        $stmt = mysqli_prepare($conn, 'UPDATE data_barang SET nama = ?, kategori = ?, harga_jual = ?, harga_beli = ?, stok = ?, gambar = ? WHERE id_barang = ?');
+        mysqli_stmt_bind_param($stmt, 'ssssssi', $nama, $kategori, $harga_jual, $harga_beli, $stok, $gambar, $id);
+    } else {
+        $stmt = mysqli_prepare($conn, 'UPDATE data_barang SET nama = ?, kategori = ?, harga_jual = ?, harga_beli = ?, stok = ? WHERE id_barang = ?');
+        mysqli_stmt_bind_param($stmt, 'sssssi', $nama, $kategori, $harga_jual, $harga_beli, $stok, $id);
+    }
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
 
-    header('location: index.php');
+    header('Location: index.php');
+    exit;
 }
 
-$id = $_GET['id'];
-$sql = "SELECT * FROM data_barang WHERE id_barang = '{$id}'";
-$result = mysqli_query($conn, $sql);
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+if (!$id) {
+    header('Location: index.php');
+    exit;
+}
+$stmt = mysqli_prepare($conn, 'SELECT * FROM data_barang WHERE id_barang = ?');
+mysqli_stmt_bind_param($stmt, 'i', $id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 if (!$result) die('Error: Data tidak tersedia');
 $data = mysqli_fetch_array($result);
+mysqli_stmt_close($stmt);
+if (!$data) {
+    header('Location: index.php');
+    exit;
+}
 
 function is_select($var, $val) {
     if ($var == $val) return 'selected="selected"';
@@ -62,7 +75,7 @@ function is_select($var, $val) {
             <div class="input">
                 <label>Nama Barang</label>
                 <input type="text" name="nama" value="<?php echo
-$data['nama'];?>" />
+htmlspecialchars($data['nama'], ENT_QUOTES, 'UTF-8');?>" />
             </div>
             <div class="input">
                 <label>Kategori</label>
@@ -78,17 +91,17 @@ $data['nama'];?>" />
             <div class="input">
                 <label>Harga Jual</label>
                 <input type="text" name="harga_jual" value="<?php echo
-$data['harga_jual'];?>" />
+htmlspecialchars($data['harga_jual'], ENT_QUOTES, 'UTF-8');?>" />
             </div>
             <div class="input">
                 <label>Harga Beli</label>
                 <input type="text" name="harga_beli" value="<?php echo
-$data['harga_beli'];?>" />
+htmlspecialchars($data['harga_beli'], ENT_QUOTES, 'UTF-8');?>" />
             </div>
             <div class="input">
                 <label>Stok</label>
                 <input type="text" name="stok" value="<?php echo
-$data['stok'];?>" />
+htmlspecialchars($data['stok'], ENT_QUOTES, 'UTF-8');?>" />
             </div>
             <div class="input">
                 <label>File Gambar</label>

@@ -2,26 +2,26 @@
 error_reporting(E_ALL);
 include_once 'koneksi.php';
 if (isset($_POST['submit'])) {
-    $nama = $_POST['nama'];
-    $kategori = $_POST['kategori'];
-    $harga_jual = $_POST['harga_jual'];
-    $harga_beli = $_POST['harga_beli'];
-    $stok = $_POST['stok'];
-    $file_gambar = $_FILES['file_gambar'];
+    $nama = trim($_POST['nama'] ?? '');
+    $kategori = $_POST['kategori'] ?? '';
+    $harga_jual = $_POST['harga_jual'] ?? '';
+    $harga_beli = $_POST['harga_beli'] ?? '';
+    $stok = $_POST['stok'] ?? '';
+    $file_gambar = $_FILES['file_gambar'] ?? null;
     $gambar = null;
-    if ($file_gambar['error'] == 0) {
+    if ($file_gambar && ($file_gambar['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
         $filename = str_replace(' ', '_', $file_gambar['name']);
         $destination = dirname(__FILE__) . '/gambar/' . $filename;
         if (move_uploaded_file($file_gambar['tmp_name'], $destination)) {
-            $gambar = 'gambar/' . $filename;;
+            $gambar = 'gambar/' . $filename;
         }
     }
-    $sql = 'INSERT INTO data_barang (nama, kategori,harga_jual,
-harga_beli, stok, gambar) ';
-    $sql .= "VALUE ('{$nama}', '{$kategori}','{$harga_jual}',
-'{$harga_beli}', '{$stok}', '{$gambar}')";
-    $result = mysqli_query($conn, $sql);
-    header('location: index.php');
+    $stmt = mysqli_prepare($conn, 'INSERT INTO data_barang (nama, kategori, harga_jual, harga_beli, stok, gambar) VALUES (?, ?, ?, ?, ?, ?)');
+    mysqli_stmt_bind_param($stmt, 'ssssss', $nama, $kategori, $harga_jual, $harga_beli, $stok, $gambar);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header('Location: index.php');
+    exit;
 }
 ?>
 <!DOCTYPE html>
